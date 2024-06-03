@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:adm="http://github.com/adminfaces"
+                template="/WEB-INF/templates/template.xhtml">
+
+    <ui:define name="title">
+        Cadastro Marca
+    </ui:define>
+
+    <ui:define name="body">
+        <f:metadata>
+        </f:metadata>
+
+			<p:panel>
+				<h:form id="form" rendered="#{beanSession.acesso('cadastro_marca')}">
+					<p:growl id="erros" showDetail="true" sticky="true" />
+					<p:panelGrid columns="2">
+					
+						<p:outputLabel value="Nome:" for="nome" />
+						<p:inputText id="nome" value="#{beanMarca.marca.nome}" required="true" onkeyup="this.value=this.value.toUpperCase()"/>
+						
+						
+						<p:outputLabel value="Ativo: " for="situacao" />
+						<p:selectBooleanCheckbox id="situacao" value="#{beanMarca.marca.situacao}"  required="true" />
+						
+						
+					</p:panelGrid>
+					<p:commandButton action="#{beanMarca.salvar()}" value="Salvar"
+						icon="fa fa-check" styleClass="btn-primary"/>
+				</h:form>
+			</p:panel>
+
+    </ui:define>
+
+</ui:composition>
