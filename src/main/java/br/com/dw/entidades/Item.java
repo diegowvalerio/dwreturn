@@ -51,7 +51,7 @@ public class Item implements Serializable {
 	@Column(nullable=false,columnDefinition="varchar(50)")
 	private String componente_defeituoso;
 	
-	@Column(nullable=false,columnDefinition="varchar(250)")
+	@Column(nullable=true,columnDefinition="varchar(250)")
 	private String observacao;
 	
 	@Column(nullable=false) 
