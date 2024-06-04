@@ -9,8 +9,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import br.com.dw.entidades.seven.CondPgto;
-import br.com.dw.entidades.seven.FormaPag;
+import br.com.dw.entidades.seven.SevenCliente;
+import br.com.dw.entidades.seven.SevenProduto;
 import br.com.dw.entidades.seven.SevenVendedor;
 import br.com.dw.fabrica.EntityManagerProducerSeven.Corporativo;
 
@@ -31,67 +31,6 @@ public class DAOGenericoHibernateSeven<E> implements DAOGenericoSeven<E>, Serial
 	}
 	
 	
-	public List<FormaPag> formapag(){
-		List<FormaPag> list = new ArrayList<>();
-		
-		String sql= ""
-				+ " select "
-				+ " f.formacobrancaid , "
-				+ " f.nome_formacob , "
-				+ " f.desc_integracao "
-				+ " from formacobranca f "
-				+ " where f.bo_disponibilizar_web = 'SIM' "
-				+ " and f.desc_integracao  is not null ";
-		
-		javax.persistence.Query query = (javax.persistence.Query) manager.createNativeQuery(sql);
-		
-		List<Object[]> lista = query.getResultList();
-
-		for (Object[] row : lista) {
-			FormaPag f = new FormaPag();
-			
-			f.setIdformapag(((BigDecimal) row[0]).intValue());
-			f.setNome((String)row[1]);
-			f.setDesc_integracao((String)row[2]);
-			
-			list.add(f);
-			
-		}
-		return list;
-	}
-	
-	public List<CondPgto> condPgto(String login){
-		List<CondPgto> list = new ArrayList<>();
-		
-		String sql= ""
-				+ " select "
-				+ " F.formapagtoid , "
-				+ " f.nome_formapagto , "
-				+ " f.desc_integracao_formapagto , "
-				+ " tv.tabelaprecoid "
-				+ " from formapagto f "
-				+ " inner join tabelapreco_prazopagto tp on tp.formapagtoid = f.formapagtoid "
-				+ " inner join tabelapreco_vendedor tv on tv.tabelaprecoid = tp.tabelaprecoid "
-				+ " where status_formapagto = 'ATIVO' "
-				+ " and bo_disponibilizar_web = 'SIM' "
-				+ " and desc_integracao_formapagto is not null "
-				+ " and tv.cadcftvid = "+login;
-		javax.persistence.Query query = (javax.persistence.Query) manager.createNativeQuery(sql);
-		
-		List<Object[]> lista = query.getResultList();
-
-		for (Object[] row : lista) {
-			CondPgto f = new CondPgto();
-			
-			f.setIdcondpgto(((BigDecimal) row[0]).intValue());
-			f.setNome((String)row[1]);
-			f.setDesc_integracao((String)row[2]);
-			f.setTabelaprecoid(((BigDecimal)row[3]).intValue());
-			
-			list.add(f);
-		}
-		return list;
-	}
 	
 	public List<SevenVendedor> sevenvendedor(){
 		List<SevenVendedor> list = new ArrayList<>();
@@ -120,5 +59,62 @@ public class DAOGenericoHibernateSeven<E> implements DAOGenericoSeven<E>, Serial
 		}
 		return list;
 	}
+	
+	public List<SevenCliente> sevencliente(){
+		List<SevenCliente> list = new ArrayList<>();
+		
+		String sql= ""
+				+ " select  "
+				+ " CAST(C.cadcftvid as integer) cadcftvid , "
+				+ " cc.nome_cadcftv nome, "
+				+ " cc.ativo_cadcftv  ativo "
+				+ " from cliente c "
+				+ " inner join cadcftv cc on cc.cadcftvid = c.cadcftvid  "
+				+ " where cc.funcao_principal_cadcftv = 'CLIENTE' ";
+		
+		javax.persistence.Query query = (javax.persistence.Query) manager.createNativeQuery(sql);
+		
+		List<Object[]> lista = query.getResultList();
+
+		for (Object[] row : lista) {
+			SevenCliente f = new SevenCliente();
+			
+			f.setId((Integer) row[0]);
+			f.setNome((String)row[1]);
+			f.setSituacao((String)row[2]);
+			
+			list.add(f);
+		}
+		return list;
+	}	
+	
+	public List<SevenProduto> sevenproduto(){
+		List<SevenProduto> list = new ArrayList<>();
+		
+		String sql= ""
+				+ " select  "
+				+ " cast(p.produtoid as integer) produtoid, "
+				+ " p.nome_produto , "
+				+ " p.referencia_produto , "
+				+ " p.status_produto  "
+				+ " from produto p "
+				+ " where p.tp_produto = 'ACABADO' ";
+		
+		javax.persistence.Query query = (javax.persistence.Query) manager.createNativeQuery(sql);
+		
+		List<Object[]> lista = query.getResultList();
+
+		for (Object[] row : lista) {
+			SevenProduto f = new SevenProduto();
+			
+			f.setId((Integer) row[0]);
+			f.setNome((String)row[1]);
+			f.setReferencia((String)row[2]);
+			f.setSituacao((String)row[3]);
+			
+			list.add(f);
+		}
+		return list;
+	}	
 
 }
