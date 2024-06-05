@@ -130,19 +130,23 @@ public class BeanLancamento implements Serializable{
 	}	
 	
 	public String salvar(){
-		try{
-			lancamento.setItems(lista_items);
-			servico.salvar(lancamento);
-		}catch(Exception e){
-			if(e.getCause().toString().contains("ConstraintViolationException")){
-				FacesMessageUtil.addMensagemError("Registro já existente!");
-			}else{
-				FacesMessageUtil.addMensagemError(e.getCause().toString());
+		if (this.lancamento.getVendedor() == null || this.lancamento.getEmissor() == null) {
+			FacesMessageUtil.addMensagemError("O cabeçalho do Lancamento precisa estar preenchido para continuar !");
+		} else {
+			try {
+				lancamento.setItems(lista_items);
+				servico.salvar(lancamento);
+			} catch (Exception e) {
+				if (e.getCause().toString().contains("ConstraintViolationException")) {
+					FacesMessageUtil.addMensagemError("Registro já existente!");
+				} else {
+					FacesMessageUtil.addMensagemError(e.getCause().toString());
+				}
 			}
+			lista = servico.consultar();
+			return "lista-lancamento";
 		}
-		lista = servico.consultar();
-			
-		return "lista-lancamento";
+		return "";
 	}
 	
 	public String excluir(){
@@ -166,18 +170,14 @@ public class BeanLancamento implements Serializable{
 		HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
 		session.setAttribute("lancamentoAux", this.lancamento);
 
-		return "edita-lancamento";
+		return "cadastro-lancamento";
 	}
 	
 	//items
 	public void addNovoItem() {
-		if (this.lancamento.getCliente() == null || this.lancamento.getVendedor() == null || this.lancamento.getEmissor() == null) {
-			FacesMessageUtil.addMensagemError("O cabeçalho do Lancamento precisa estar preenchido para continuar !");
-		} else {
 			item = new Item();
 			item.setLancamento(lancamento);
 			item.setDtcadastro(data);
-		}
 	}
 	
 	public void removerItem() {
@@ -189,8 +189,9 @@ public class BeanLancamento implements Serializable{
 	
 	public void editarsalvarItem() {
 
-		if (item.getCausa() == null || item.getDescricao() == null ) {
-			FacesMessageUtil.addMensagemError("Preencha os dados corretamente");
+		if (item.getCausa() == null || item.getDescricao().isEmpty() || item.getComponente() == null || item.getComponente_defeituoso().isEmpty() || item.getDefeito() == null ||
+				item.getEfeito() == null || item.getMarca() == null || item.getProduto() == null || item.getQtde() == 0 || item.getResponsavel() == null || item.getTipo() == null ) {
+			FacesMessageUtil.addMensagemError("Preencha todos dados corretamente");
 		} else {
 			try {
 				int index = lista_items.indexOf(item);
@@ -205,8 +206,9 @@ public class BeanLancamento implements Serializable{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			item = new Item();
+			
 		}
+		item = new Item();	
 	}	
 	
 	public String cancelar(){

@@ -57,18 +57,30 @@
 							<h:outputLabel value="#{lancamento.id}" />
 						</p:column>
 						
-						<p:column headerText="Pedido" sortBy="#{lancamento.pedido}">
+						<p:column headerText="Pedido" sortBy="#{lancamento.pedido}" width="5%">
 							<h:outputLabel value="#{lancamento.pedido}" />
 						</p:column>
 						
-						<p:column headerText="Data Cadastro" sortBy="#{lancamento.dtanalise}" >
+						<p:column headerText="Emissor" sortBy="#{lancamento.emissor.nome}" width="8%">
+							<h:outputLabel value="#{lancamento.emissor.nome}" />
+						</p:column>
+						
+						<p:column headerText="Vendedor" sortBy="#{lancamento.vendedor.nome}">
+							<h:outputLabel value="#{lancamento.vendedor.codigoseven} - #{lancamento.vendedor.nome}" />
+						</p:column>
+						
+						<p:column headerText="Cliente" sortBy="#{lancamento.cliente.nome}">
+							<h:outputLabel value="#{lancamento.cliente.codigoseven} - #{lancamento.cliente.nome}" />
+						</p:column>
+						
+						<p:column headerText="Data" sortBy="#{lancamento.dtanalise}" width="5%" >
 							<h:outputLabel value="#{lancamento.dtanalise}" >
 							<f:convertDateTime pattern="dd/MM/yyyy"/>
 							</h:outputLabel>
 						</p:column>
 						
 						
-						<p:column width="15%" headerText="Operações"
+						<p:column width="6%" headerText="#"
 							style="text-align:center">
 							<p:commandButton action="#{beanLancamento.excluir()}" styleClass="btn-danger"
 								ajax="false" immediate="true" partialSubmit="true"  process="@this"
@@ -78,7 +90,7 @@
 									target="#{beanLancamento.lancamento}" />
 							</p:commandButton>
 
-							<p:commandButton icon="fa fa-edit" 
+							<p:commandButton icon="fa fa-edit"  styleClass="btn-warning"
 								action="#{beanLancamento.encaminha()}">
 								<f:setPropertyActionListener value="#{lancamento}"
 									target="#{beanLancamento.lancamento}" />

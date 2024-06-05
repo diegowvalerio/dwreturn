@@ -18,11 +18,12 @@
 		<h:form id="form" rendered="#{beanSession.acesso('cadastro_lancamento')}">
 			<p:growl id="erros" showDetail="true" sticky="false" />
 			
-			<p:panelGrid columns="4" id="paineld"
-						columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
-						layout="grid" styleClass="ui-fluid card">
+			<p:panelGrid columns="6" id="paineld"	>
 						
-
+						
+						<p:outputLabel value="Código:" for="codigo" />
+						<p:inputText id="codigo" value="#{beanLancamento.lancamento.id}" disabled="true" />
+						
 						<p:outputLabel value="Data:" for="dtanalise" />
 						<p:calendar autocomplete="#{beanLancamento.data}" locale="pt_BR"
 							id="dtanalise" disabled="true"
@@ -38,14 +39,14 @@
                    		
 		
                    		<p:outputLabel value="Vendedor: " for="vendedor"  />			
-                   		<p:selectOneMenu id="vendedor"	value="#{beanLancamento.lancamento.vendedor}" filter="true" filterMatchMode="contains" converter="conversorVendedor">
+                   		<p:selectOneMenu id="vendedor"	value="#{beanLancamento.lancamento.vendedor}" filter="true" filterMatchMode="contains" converter="conversorVendedor" >
 						<f:selectItem itemLabel="Selecionar" noSelectionOption="true" />
 						<f:selectItems value="#{beanLancamento.lista_vendedor}" var="vendedores"
 								itemLabel="#{vendedores.codigoseven} - #{vendedores.nome}" itemValue="#{vendedores}" />
                    		</p:selectOneMenu>
                    		
                    		<p:outputLabel value="Emissor: " for="emissor"  />			
-                   		<p:selectOneMenu id="emissor"	value="#{beanLancamento.lancamento.emissor}" filter="true" filterMatchMode="contains" converter="conversorEmissor">
+                   		<p:selectOneMenu id="emissor"	value="#{beanLancamento.lancamento.emissor}" filter="true" filterMatchMode="contains" converter="conversorEmissor" >
 						<f:selectItem itemLabel="Selecionar" noSelectionOption="true" />
 						<f:selectItems value="#{beanLancamento.lista_emissor}" var="emissores"
 								itemLabel="#{emissores.nome}" itemValue="#{emissores}" />
@@ -72,20 +73,26 @@
 						<p:dataTable id="tabela" value="#{beanLancamento.lista_items}"
 							var="items">
 							<f:facet name="header">Lista de Items</f:facet>
-							<p:column headerText="Produto" style="text-align:left" width="8%">
+							<p:column headerText="Produto" style="text-align:left" width="4%">
 									#{items.produto.codigoseven}
 								</p:column>
 							<p:column headerText="Nome Produto" style="text-align:left">
 									#{items.produto.nome}
 								</p:column>
-							<p:column headerText="Qtde" style="text-align:left" width="5%">
+							<p:column headerText="Qtde" style="text-align:left" width="3%">
 									#{items.qtde}
 								</p:column>
-							<p:column headerText="Defeito" style="text-align:left">
+							<p:column headerText="Tipo" style="text-align:left" width="10%">
+								#{items.tipo.nome}
+								</p:column>	
+							<p:column headerText="Defeito" style="text-align:left" width="15%">
 								#{items.defeito.nome}
 								</p:column>
+							<p:column headerText="Componente" style="text-align:left" width="15%">
+								#{items.componente.nome}
+								</p:column>
 
-							<p:column width="15%" headerText="Operações"
+							<p:column width="6%" headerText="#"
 								style="text-align:center">
 								<p:commandButton action="#{beanLancamento.removerItem()}" styleClass="btn-danger"
 									ajax="false" immediate="true" partialSubmit="true"  process="@this"
@@ -94,7 +101,7 @@
 									<f:setPropertyActionListener value="#{items}"
 										target="#{beanLancamento.item}" />
 								</p:commandButton>
-								<p:commandButton oncomplete="PF('dialogp').show();"
+								<p:commandButton oncomplete="PF('dialogp').show();" styleClass="btn-warning"
 									icon="ui-icon-pencil" update=":form:dlg">
 									<f:setPropertyActionListener value="#{items}"
 										target="#{beanLancamento.item}" />
@@ -112,7 +119,7 @@
 				<p:panelGrid id="painelDadosx" columns="2">
 					
 					<p:outputLabel value="Produto: " for="produto"  />			
-                   	<p:selectOneMenu id="produto"	value="#{beanLancamento.item.produto}" filter="true" filterMatchMode="contains" converter="conversorProduto">
+                   	<p:selectOneMenu id="produto"	value="#{beanLancamento.item.produto}" filter="true" filterMatchMode="contains" converter="conversorProduto"  >
 						<f:selectItem itemLabel="Selecionar" noSelectionOption="true" />
 						<f:selectItems value="#{beanLancamento.lista_produto}" var="produto"
 								itemLabel="#{produto.codigoseven} - #{produto.nome}" itemValue="#{produto}" />
@@ -122,7 +129,7 @@
 					<p:inputNumber id="qtde"	value="#{beanLancamento.item.qtde}" />
 					
 					<p:outputLabel value="Tipo" for="tipo" />
-					<p:selectOneMenu  id="tipo" value="#{beanLancamento.item.tipo}" converter="conversorTipo"  >
+					<p:selectOneMenu  id="tipo" value="#{beanLancamento.item.tipo}" converter="conversorTipo" >
 							<f:selectItems  value="#{beanLancamento.lista_tipo}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}" />
 					</p:selectOneMenu>
 					
@@ -132,10 +139,10 @@
 						
 					<p:outputLabel value="Componente" for="componentedesc" />
 					<p:inputText id="componentedesc" onkeyup="this.value=this.value.toUpperCase()"
-						value="#{beanLancamento.item.componente_defeituoso}" maxlength="50"/>	
+						value="#{beanLancamento.item.componente_defeituoso}" maxlength="50" />	
 						
 					<p:outputLabel value="Componente: " for="componente"  />			
-                   	<p:selectOneMenu id="componente"	value="#{beanLancamento.item.componente}" filter="true" filterMatchMode="contains" converter="conversorComponente">
+                   	<p:selectOneMenu id="componente"	value="#{beanLancamento.item.componente}" filter="true" filterMatchMode="contains" converter="conversorComponente" >
 						<f:selectItem itemLabel="Selecionar" noSelectionOption="true" />
 						<f:selectItems value="#{beanLancamento.lista_componente}" var="componente"
 								itemLabel="#{componente.nome}" itemValue="#{componente}" />
@@ -143,29 +150,29 @@
 						
 					<p:outputLabel value="Causa" for="causa" />
 					<p:inputText id="causa" onkeyup="this.value=this.value.toUpperCase()"
-						value="#{beanLancamento.item.causa}" maxlength="50"/>
+						value="#{beanLancamento.item.causa}" maxlength="50" />
 						
 					<p:outputLabel value="Efeito" for="efeito" />
-					<p:selectOneMenu  id="efeito" value="#{beanLancamento.item.efeito}" converter="conversorEfeito"  >
+					<p:selectOneMenu  id="efeito" value="#{beanLancamento.item.efeito}" converter="conversorEfeito" >
 							<f:selectItems  value="#{beanLancamento.lista_efeito}" var="efeito" itemLabel="#{efeito.nome}" itemValue="#{efeito}" />
 					</p:selectOneMenu>
 					
 					<p:outputLabel value="Defeito: " for="defeito"  />			
-                   	<p:selectOneMenu id="defeito"	value="#{beanLancamento.item.defeito}" filter="true" filterMatchMode="contains" converter="conversorDefeito">
+                   	<p:selectOneMenu id="defeito"	value="#{beanLancamento.item.defeito}" filter="true" filterMatchMode="contains" converter="conversorDefeito" >
 						<f:selectItem itemLabel="Selecionar" noSelectionOption="true" />
 						<f:selectItems value="#{beanLancamento.lista_defeito}" var="defeito"
 								itemLabel="#{defeito.nome}" itemValue="#{defeito}" />
                    	</p:selectOneMenu>	
                    	
                    	<p:outputLabel value="Responsavel: " for="responsavel"  />			
-                   	<p:selectOneMenu id="responsavel"	value="#{beanLancamento.item.responsavel}" filter="true" filterMatchMode="contains" converter="conversorResponsavel">
+                   	<p:selectOneMenu id="responsavel"	value="#{beanLancamento.item.responsavel}" filter="true" filterMatchMode="contains" converter="conversorResponsavel" >
 						<f:selectItem itemLabel="Selecionar" noSelectionOption="true" />
 						<f:selectItems value="#{beanLancamento.lista_responsavel}" var="responsavel"
 								itemLabel="#{responsavel.nome}" itemValue="#{responsavel}" />
                    	</p:selectOneMenu>
                    	
                    	<p:outputLabel value="Marca: " for="marca"  />			
-                   	<p:selectOneMenu id="marca"	value="#{beanLancamento.item.marca}" filter="true" filterMatchMode="contains" converter="conversorMarca">
+                   	<p:selectOneMenu id="marca"	value="#{beanLancamento.item.marca}" filter="true" filterMatchMode="contains" converter="conversorMarca" >
 						<f:selectItem itemLabel="Selecionar" noSelectionOption="true" />
 						<f:selectItems value="#{beanLancamento.lista_marca}" var="marca"
 								itemLabel="#{marca.nome}" itemValue="#{marca}" />
@@ -173,7 +180,7 @@
                    			
 					<p:outputLabel for="observacao" value="Observacão"/>
                    	<p:inputTextarea id="observacao" maxlength="250" autoResize="false"
-                   		value="#{beanLancamento.item.observacao}"/>
+                   		value="#{beanLancamento.item.observacao}" />
                    		
 				</p:panelGrid>
 				
@@ -189,7 +196,7 @@
 			<p:commandButton action="#{beanLancamento.salvar()}" value="Salvar"
 				icon="fa fa-check" styleClass="btn-primary" update="erros" />
 			<p:commandButton action="#{beanLancamento.cancelar()}" value="Cancelar"
-				icon="fa fa-check" styleClass="btn-danger" />
+				icon="fa fa-check" styleClass="btn-danger" update="erros"/>
 		</h:form>
 
 	</ui:define>
