@@ -4,8 +4,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:adm="http://github.com/adminfaces"
-	template="/WEB-INF/templates/template.xhtml">
+	template="/WEB-INF/templates/template2.xhtml">
 
 	<ui:define name="title">
         Cadastro Lançamento
@@ -18,42 +17,41 @@
 		<h:form id="form" rendered="#{beanSession.acesso('cadastro_lancamento')}">
 			<p:growl id="erros" showDetail="true" sticky="false" />
 			
-			<p:panelGrid columns="6" id="paineld"	>
+			<p:panelGrid columns="6" id="paineld" style="width: 100%;" >					
 						
+						<p:outputLabel value="Código:" for="codigo" style="font-size: 12px;" />
+						<p:inputText id="codigo" value="#{beanLancamento.lancamento.id}" disabled="true" style="font-size: 12px;" />
 						
-						<p:outputLabel value="Código:" for="codigo" />
-						<p:inputText id="codigo" value="#{beanLancamento.lancamento.id}" disabled="true" />
-						
-						<p:outputLabel value="Data:" for="dtanalise" />
+						<p:outputLabel value="Data:" for="dtanalise" style="font-size: 12px;" />
 						<p:calendar autocomplete="#{beanLancamento.data}" locale="pt_BR"
-							id="dtanalise" disabled="true"
+							id="dtanalise" disabled="true" style="font-size: 12px;"
 							value="#{beanLancamento.lancamento.dtanalise}" pattern="dd/MM/yyyy"
 							mask="true" required="true" effect="fold" />
 						
-						<p:outputLabel value="Cliente: " for="cliente"  />			
-                   		<p:selectOneMenu id="cliente"	value="#{beanLancamento.lancamento.cliente}" filter="true" filterMatchMode="contains" converter="conversorCliente">
+						<p:outputLabel value="Cliente: " for="cliente"  style="font-size: 12px;"/>			
+                   		<p:selectOneMenu id="cliente"	value="#{beanLancamento.lancamento.cliente}" filter="true" filterMatchMode="contains" converter="conversorCliente" style="font-size: 12px;">
 						<f:selectItem itemLabel="Selecionar" noSelectionOption="true" />
 						<f:selectItems value="#{beanLancamento.lista_cliente}" var="clientes"
 								itemLabel="#{clientes.codigoseven} - #{clientes.nome}" itemValue="#{clientes}" />
                    		</p:selectOneMenu>
                    		
 		
-                   		<p:outputLabel value="Vendedor: " for="vendedor"  />			
-                   		<p:selectOneMenu id="vendedor"	value="#{beanLancamento.lancamento.vendedor}" filter="true" filterMatchMode="contains" converter="conversorVendedor" >
+                   		<p:outputLabel value="Vendedor: " for="vendedor"  style="font-size: 12px;"/>			
+                   		<p:selectOneMenu id="vendedor"	value="#{beanLancamento.lancamento.vendedor}" filter="true" filterMatchMode="contains" converter="conversorVendedor" style="font-size: 12px;">
 						<f:selectItem itemLabel="Selecionar" noSelectionOption="true" />
 						<f:selectItems value="#{beanLancamento.lista_vendedor}" var="vendedores"
 								itemLabel="#{vendedores.codigoseven} - #{vendedores.nome}" itemValue="#{vendedores}" />
                    		</p:selectOneMenu>
                    		
-                   		<p:outputLabel value="Emissor: " for="emissor"  />			
-                   		<p:selectOneMenu id="emissor"	value="#{beanLancamento.lancamento.emissor}" filter="true" filterMatchMode="contains" converter="conversorEmissor" >
+                   		<p:outputLabel value="Emissor: " for="emissor"  style="font-size: 12px;"/>			
+                   		<p:selectOneMenu id="emissor"	value="#{beanLancamento.lancamento.emissor}" filter="true" filterMatchMode="contains" converter="conversorEmissor" style="font-size: 12px;">
 						<f:selectItem itemLabel="Selecionar" noSelectionOption="true" />
 						<f:selectItems value="#{beanLancamento.lista_emissor}" var="emissores"
 								itemLabel="#{emissores.nome}" itemValue="#{emissores}" />
                    		</p:selectOneMenu>
                    		
-                   		<p:outputLabel value="Pedido:" for="pedido" />
-						<p:inputText id="pedido" value="#{beanLancamento.lancamento.pedido}" />
+                   		<p:outputLabel value="Pedido:" for="pedido" style="font-size: 12px;"/>
+						<p:inputText id="pedido" value="#{beanLancamento.lancamento.pedido}" style="font-size: 12px;"/>
 					
 					
 					</p:panelGrid>
@@ -70,16 +68,15 @@
 								target="#{beanLancamento.item.lancamento}"
 								value="#{beanLancamento.lancamento}" />
 						</p:commandButton>
-						<p:dataTable id="tabela" value="#{beanLancamento.lista_items}"
-							var="items">
+						<p:dataTable id="tabela" value="#{beanLancamento.lista_items}"	var="items" style="font-size: 12px;">
 							<f:facet name="header">Lista de Items</f:facet>
-							<p:column headerText="Produto" style="text-align:left" width="4%">
+							<p:column headerText="Produto" style="text-align:left" width="6%">
 									#{items.produto.codigoseven}
 								</p:column>
 							<p:column headerText="Nome Produto" style="text-align:left">
 									#{items.produto.nome}
 								</p:column>
-							<p:column headerText="Qtde" style="text-align:left" width="3%">
+							<p:column headerText="Qtde" style="text-align:left" width="4%">
 									#{items.qtde}
 								</p:column>
 							<p:column headerText="Tipo" style="text-align:left" width="10%">
@@ -92,7 +89,7 @@
 								#{items.componente.nome}
 								</p:column>
 
-							<p:column width="6%" headerText="#"
+							<p:column width="10%" headerText="#"
 								style="text-align:center">
 								<p:commandButton action="#{beanLancamento.removerItem()}" styleClass="btn-danger"
 									ajax="false" immediate="true" partialSubmit="true"  process="@this"
@@ -111,10 +108,18 @@
 							</p:dataTable>		
 					</p:panelGrid>
 			
-			
-			<p:dialog id="dlg" header="Novo Item" widgetVar="dialogp"
-				responsive="true" resizable="true" modal="true" position="center"
-				onShow="position='center'">
+			<style type="text/css">
+            
+            .dialog_teste{
+            	left: 250px;
+            }
+
+            #form:dlg{
+            	left: 250px;
+            }
+        </style>
+        			
+			<p:dialog id="dlg" header="Novo Item" widgetVar="dialogp"  modal="true"  position="center" onShow="position='center'" responsive="true" resizable="true" styleClass="dialog_teste" >
        	
 				<p:panelGrid id="painelDadosx" columns="2">
 					

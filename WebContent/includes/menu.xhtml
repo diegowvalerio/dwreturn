@@ -77,6 +77,26 @@
 				
 					
 			</ul></li>
+			
+		<li class="treeview"><p:link href="#"
+				rendered="#{beanSession.acesso('menu_relatorios')}">
+				<i class="fa fa-th-list"></i>
+				<span>Relatórios</span>
+				<span class="pull-right-container"> <i
+					class="fa fa-angle-left pull-right"></i>
+				</span>
+			</p:link>
+			<ul class="treeview-menu">	
+			
+			
+			<li><p:link href="/pages/relatorios/relatorio01.xhtml"
+						rendered="#{beanSession.acesso('relatorio_01')}">
+						<i class="fa fa-bars"></i>
+						<span>Relatório 01</span>
+					</p:link></li>
+					
+					
+		</ul></li>	
 
 		<li class="treeview"><p:link href="#"
 				rendered="#{beanSession.acesso('menu_sistema')}">

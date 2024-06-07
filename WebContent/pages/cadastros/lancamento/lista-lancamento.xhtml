@@ -48,7 +48,7 @@
 					<p:dataTable id="LancamentoTable" widgetVar="LancamentoTable" rows="10"
 						value="#{beanLancamento.lista}" var="lancamento"
 						rowKey="#{lancamento.id}" paginator="true"
-						paginatorPosition="bottom"
+						paginatorPosition="bottom" style="font-size: 12px;"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
 						currentPageReportTemplate="" rowsPerPageTemplate="5,10,15,20,30">
 
@@ -73,14 +73,14 @@
 							<h:outputLabel value="#{lancamento.cliente.codigoseven} - #{lancamento.cliente.nome}" />
 						</p:column>
 						
-						<p:column headerText="Data" sortBy="#{lancamento.dtanalise}" width="5%" >
+						<p:column headerText="Data" sortBy="#{lancamento.dtanalise}" width="8%" >
 							<h:outputLabel value="#{lancamento.dtanalise}" >
 							<f:convertDateTime pattern="dd/MM/yyyy"/>
 							</h:outputLabel>
 						</p:column>
 						
 						
-						<p:column width="6%" headerText="#"
+						<p:column width="10%" headerText="#"
 							style="text-align:center">
 							<p:commandButton action="#{beanLancamento.excluir()}" styleClass="btn-danger"
 								ajax="false" immediate="true" partialSubmit="true"  process="@this"

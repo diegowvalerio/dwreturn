@@ -1,0 +1,371 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:adm="http://github.com/adminfaces"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="head-end">
+		<style type="text/css">
+.ui-grid-row .ui-grid-col-2, .ui-grid-row .ui-grid-col-10 {
+	padding: 0.5em 0;
+	margin-left: 10px;
+}
+
+.ui-orderlist .ui-orderlist-list {
+	height: auto;
+}
+
+.ui-orderlist .ui-grid-row .ui-grid-col-2, .ui-orderlist .ui-grid-row .ui-grid-col-10
+	{
+	padding: 0;
+}
+</style>
+
+<script type="text/javascript">	
+
+function fullscreen(){
+	var el = document.getElementById("gf1");
+
+	  // Supports most browsers and their versions.
+	  var requestMethod = el.requestFullScreen || el.webkitRequestFullScreen 
+	  || el.mozRequestFullScreen || el.msRequestFullScreen;
+
+	  if (requestMethod) {
+
+	    // Native full screen.
+	    requestMethod.call(el);
+
+	  } else if (typeof window.ActiveXObject !== "undefined") {
+
+	    // Older IE.
+	    var wscript = new ActiveXObject("WScript.Shell");
+
+	    if (wscript !== null) {
+	      wscript.SendKeys("{F11}");
+	    }
+	  }
+} ;
+
+function fullscreen2(){
+	var el = document.getElementById("gf2");
+
+	  // Supports most browsers and their versions.
+	  var requestMethod = el.requestFullScreen || el.webkitRequestFullScreen 
+	  || el.mozRequestFullScreen || el.msRequestFullScreen;
+
+	  if (requestMethod) {
+
+	    // Native full screen.
+	    requestMethod.call(el);
+
+	  } else if (typeof window.ActiveXObject !== "undefined") {
+
+	    // Older IE.
+	    var wscript = new ActiveXObject("WScript.Shell");
+
+	    if (wscript !== null) {
+	      wscript.SendKeys("{F11}");
+	    }
+	  }
+} ;
+
+function fullscreen3(){
+	var el = document.getElementById("gf3");
+
+	  // Supports most browsers and their versions.
+	  var requestMethod = el.requestFullScreen || el.webkitRequestFullScreen 
+	  || el.mozRequestFullScreen || el.msRequestFullScreen;
+
+	  if (requestMethod) {
+
+	    // Native full screen.
+	    requestMethod.call(el);
+
+	  } else if (typeof window.ActiveXObject !== "undefined") {
+
+	    // Older IE.
+	    var wscript = new ActiveXObject("WScript.Shell");
+
+	    if (wscript !== null) {
+	      wscript.SendKeys("{F11}");
+	    }
+	  }
+} ;
+
+function fullscreen4(){
+	var el = document.getElementById("gf4");
+
+	  // Supports most browsers and their versions.
+	  var requestMethod = el.requestFullScreen || el.webkitRequestFullScreen 
+	  || el.mozRequestFullScreen || el.msRequestFullScreen;
+
+	  if (requestMethod) {
+
+	    // Native full screen.
+	    requestMethod.call(el);
+
+	  } else if (typeof window.ActiveXObject !== "undefined") {
+
+	    // Older IE.
+	    var wscript = new ActiveXObject("WScript.Shell");
+
+	    if (wscript !== null) {
+	      wscript.SendKeys("{F11}");
+	    }
+	  }
+} ;
+
+</script>
+
+	</ui:define>
+
+	<ui:define name="title">
+	Relatorio
+    </ui:define>
+
+	<ui:define name="description">
+        Dados apartir de 06/2024
+    </ui:define>
+
+	<ui:define name="body">
+		<adm:breadcrumb title="Dados Cliente" />
+
+		<h:form id="form">
+			<p:panelGrid columns="11" layout="grid"  id="filtros1">
+				
+				<p:outputLabel value=" Data:  " for="data_grafico" />
+					<p:calendar locale="pt_BR" id="data_grafico"
+						value="#{beanRelatorio01.data_grafico}" pattern="dd/MM/yyyy"
+						mask="true" required="true" >
+					</p:calendar>
+
+					<p:outputLabel value=" Até:  " for="data_grafico2" />
+					<p:calendar locale="pt_BR" id="data_grafico2"
+						value="#{beanRelatorio01.data_grafico2}" pattern="dd/MM/yyyy"
+						mask="true" required="true" >
+					</p:calendar>
+					
+					<p:outputLabel value="Defeito: " for="defeito"  />			
+                   	<p:selectOneMenu id="defeito"	value="#{beanRelatorio01.defeito}" filter="true" filterMatchMode="contains" converter="conversorDefeito" >
+						<f:selectItem itemLabel="Selecionar" noSelectionOption="true" />
+						<f:selectItems value="#{beanRelatorio01.defeitos}" var="defeito" itemLabel="#{defeito.nome}" itemValue="#{defeito}" />
+                   	</p:selectOneMenu>	
+                   	
+                   	<p:outputLabel value="Responsavel: " for="responsavel"  />			
+                   	<p:selectOneMenu id="responsavel"	value="#{beanRelatorio01.responsavel}" filter="true" filterMatchMode="contains" converter="conversorResponsavel" >
+						<f:selectItem itemLabel="Selecionar" noSelectionOption="true" />
+						<f:selectItems value="#{beanRelatorio01.responsaveis}" var="responsavel" itemLabel="#{responsavel.nome}" itemValue="#{responsavel}" />
+                   	</p:selectOneMenu>
+                   	
+                   	<p:outputLabel value="Tipo: " for="tipo"  />			
+                   	<p:selectOneMenu id="tipo"	value="#{beanRelatorio01.tipo}" filter="true" filterMatchMode="contains" converter="conversorTipo" >
+						<f:selectItem itemLabel="Selecionar" noSelectionOption="true" />
+						<f:selectItems value="#{beanRelatorio01.tipos}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}" />
+                   	</p:selectOneMenu>
+
+					<p:commandButton action="#{beanRelatorio01.filtrar()}" value="Filtrar"
+						icon="fa fa-check" update=":form" styleClass="btn-primary" />
+
+			</p:panelGrid>
+			
+				<p:separator></p:separator>
+									
+					<div class="row" >	
+
+						
+						<div class="col-md-6">
+							<div class="box box-default" id="gf1">
+							
+								<div class="box-header with-border">
+									<h3 class="box-title">Defeitos</h3>
+									<div class="box-tools pull-right">
+										<button type="button" class="btn btn-box-tool"
+											data-widget="collapse">
+											<i class="fa fa-minus"></i>
+										</button>
+										<button type="button" class="btn btn-box-tool" onclick="fullscreen()">
+											<i class="fa fa-desktop"></i>
+										</button>
+									</div>
+								</div>
+			
+								<div class="box-body" >
+								<p:tabView dynamic="false" cache="false" id="tabview1">
+									<p:tab title="Gráfico" id="grafico">
+										<img src="#{beanRelatorio01.urlimg}" width="100%" />
+									</p:tab>
+									<p:tab title="Dados" id="dados">
+										<p:dataTable id="tabela1" value="#{beanRelatorio01.lista_defeito_qtde}" var="lista" scrollable="true" scrollHeight="300">
+											<p:column headerText="Defeito" >
+												<h:outputText value="#{lista.nome}" />
+											</p:column>
+											
+											<p:column headerText="Qtde" >
+												<h:outputText value="#{lista.total}" />						
+											</p:column>
+											
+											<p:column headerText="Percentual %" >
+												<h:outputText value="#{lista.percentual}" />
+											</p:column>
+											
+										</p:dataTable>
+									</p:tab>
+								</p:tabView>	
+									
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-md-6">
+							<div class="box box-default" id="gf2">
+							
+								<div class="box-header with-border">
+									<h3 class="box-title">Componentes</h3>
+									<div class="box-tools pull-right">
+										<button type="button" class="btn btn-box-tool"
+											data-widget="collapse">
+											<i class="fa fa-minus"></i>
+										</button>
+										<button type="button" class="btn btn-box-tool" onclick="fullscreen2()">
+											<i class="fa fa-desktop"></i>
+										</button>
+									</div>
+								</div>
+			
+								<div class="box-body" >
+                   				 	
+                   				 <p:tabView dynamic="false" cache="false" id="tabview2">
+									<p:tab title="Gráfico" id="grafico2">										 
+                   						<img  src="#{beanRelatorio01.urlimg2}" width="100%" />								 			
+									</p:tab>
+									<p:tab title="Gráfico 2" id="grafico3">										 
+                   						<img  src="#{beanRelatorio01.urlimg3}" width="100%" />								 			
+									</p:tab>
+									<p:tab title="Dados" id="dados2">
+										<p:dataTable id="tabela2" value="#{beanRelatorio01.lista_defeito_componente}" var="lista" scrollable="true" scrollHeight="300">
+											<p:column headerText="Componente" >
+												<h:outputText value="#{lista.nome}" />
+											</p:column>
+											
+											<p:column headerText="Qtde" >
+												<h:outputText value="#{lista.total}" />						
+											</p:column>
+											
+											<p:column headerText="Percentual %" >
+												<h:outputText value="#{lista.percentual}" />
+											</p:column>
+											
+										</p:dataTable>
+									</p:tab>
+								</p:tabView>
+
+								</div>
+							</div>
+						</div>
+						
+						
+						<div class="col-md-6">
+							<div class="box box-default" id="gf3">
+							
+								<div class="box-header with-border">
+									<h3 class="box-title">Responsavel</h3>
+									<div class="box-tools pull-right">
+										<button type="button" class="btn btn-box-tool"
+											data-widget="collapse">
+											<i class="fa fa-minus"></i>
+										</button>
+										<button type="button" class="btn btn-box-tool" onclick="fullscreen3()">
+											<i class="fa fa-desktop"></i>
+										</button>
+									</div>
+								</div>
+			
+								<div class="box-body" >
+                   				 	
+                   				 <p:tabView dynamic="false" cache="false" id="tabview3">
+									<p:tab title="Gráfico" id="grafico3">										 
+                   						<img  src="#{beanRelatorio01.urlimg4}" width="100%" />								 			
+									</p:tab>
+									<p:tab title="Dados" id="dados3">
+										<p:dataTable id="tabela2" value="#{beanRelatorio01.lista_defeito_responsavel}" var="lista" scrollable="true" scrollHeight="300">
+											<p:column headerText="Responsavel" >
+												<h:outputText value="#{lista.nome}" />
+											</p:column>
+											
+											<p:column headerText="Qtde" >
+												<h:outputText value="#{lista.total}" />						
+											</p:column>
+											
+											<p:column headerText="Percentual %" >
+												<h:outputText value="#{lista.percentual}" />
+											</p:column>
+											
+										</p:dataTable>
+									</p:tab>
+								</p:tabView>
+
+								</div>
+							</div>
+						</div>
+				</div>	
+				
+				<p:separator></p:separator>
+									
+					<div class="row" >	
+					
+						
+						<div class="col-md-12">
+							<div class="box box-default" id="gf4">
+							
+								<div class="box-header with-border">
+									<h3 class="box-title">Produtos Acabado</h3>
+									<div class="box-tools pull-right">
+										<button type="button" class="btn btn-box-tool"
+											data-widget="collapse">
+											<i class="fa fa-minus"></i>
+										</button>
+										<button type="button" class="btn btn-box-tool" onclick="fullscreen4()">
+											<i class="fa fa-desktop"></i>
+										</button>
+									</div>
+								</div>
+			
+								<div class="box-body" >
+                   				 	
+                   				 <p:tabView dynamic="false" cache="false" id="tabview4">
+									<p:tab title="Gráfico" id="grafico4">										 
+                   						<img  src="#{beanRelatorio01.urlimg5}" width="100%" />								 			
+									</p:tab>
+									<p:tab title="Dados" id="dados4">
+										<p:dataTable id="tabela3" value="#{beanRelatorio01.lista_defeito_produto}" var="lista" scrollable="true" scrollHeight="300">
+											<p:column headerText="Responsavel" >
+												<h:outputText value="#{lista.nome}" />
+											</p:column>
+											
+											<p:column headerText="Qtde" >
+												<h:outputText value="#{lista.total}" />						
+											</p:column>
+											
+											<p:column headerText="Percentual %" >
+												<h:outputText value="#{lista.percentual}" />
+											</p:column>
+											
+										</p:dataTable>
+									</p:tab>
+								</p:tabView>
+
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				
+		
+					
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
