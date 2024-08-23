@@ -14,6 +14,7 @@ public class SevenProduto implements Serializable {
 	private String referencia;
 	private String nome;
 	private String situacao;
+	private Double vlcusto;
 	
 	public SevenProduto() {
 		super();
@@ -50,6 +51,17 @@ public class SevenProduto implements Serializable {
 	public void setSituacao(String situacao) {
 		this.situacao = situacao;
 	}
+
+	public Double getVlcusto() {
+		return vlcusto;
+	}
+
+	public void setVlcusto(Double vlcusto) {
+		this.vlcusto = vlcusto;
+	}
+
+	
+	
 
 	
    

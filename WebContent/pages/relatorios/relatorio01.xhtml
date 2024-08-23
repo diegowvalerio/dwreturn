@@ -117,6 +117,52 @@ function fullscreen4(){
 	  }
 } ;
 
+function fullscreen5(){
+	var el = document.getElementById("gf5");
+
+	  // Supports most browsers and their versions.
+	  var requestMethod = el.requestFullScreen || el.webkitRequestFullScreen 
+	  || el.mozRequestFullScreen || el.msRequestFullScreen;
+
+	  if (requestMethod) {
+
+	    // Native full screen.
+	    requestMethod.call(el);
+
+	  } else if (typeof window.ActiveXObject !== "undefined") {
+
+	    // Older IE.
+	    var wscript = new ActiveXObject("WScript.Shell");
+
+	    if (wscript !== null) {
+	      wscript.SendKeys("{F11}");
+	    }
+	  }
+} ;
+
+
+function fullscreen6(){
+	var el = document.getElementById("gf6");
+
+	  // Supports most browsers and their versions.
+	  var requestMethod = el.requestFullScreen || el.webkitRequestFullScreen 
+	  || el.mozRequestFullScreen || el.msRequestFullScreen;
+
+	  if (requestMethod) {
+
+	    // Native full screen.
+	    requestMethod.call(el);
+
+	  } else if (typeof window.ActiveXObject !== "undefined") {
+
+	    // Older IE.
+	    var wscript = new ActiveXObject("WScript.Shell");
+
+	    if (wscript !== null) {
+	      wscript.SendKeys("{F11}");
+	    }
+	  }
+} ;
 </script>
 
 	</ui:define>
@@ -309,6 +355,95 @@ function fullscreen4(){
 								</div>
 							</div>
 						</div>
+						
+						<div class="col-md-6">
+							<div class="box box-default" id="gf5">
+							
+								<div class="box-header with-border">
+									<h3 class="box-title">Tipo de Lançamento</h3>
+									<div class="box-tools pull-right">
+										<button type="button" class="btn btn-box-tool"
+											data-widget="collapse">
+											<i class="fa fa-minus"></i>
+										</button>
+										<button type="button" class="btn btn-box-tool" onclick="fullscreen5()">
+											<i class="fa fa-desktop"></i>
+										</button>
+									</div>
+								</div>
+			
+								<div class="box-body" >
+                   				 	
+                   				 <p:tabView dynamic="false" cache="false" id="tabview5">
+									<p:tab title="Gráfico" id="grafico5">										 
+                   						<img  src="#{beanRelatorio01.urlimg6}" width="100%" />								 			
+									</p:tab>
+									<p:tab title="Dados" id="dados5">
+										<p:dataTable id="tabela5" value="#{beanRelatorio01.lista_defeito_tipo}" var="lista" scrollable="true" scrollHeight="300">
+											<p:column headerText="Tipo" >
+												<h:outputText value="#{lista.nome}" />
+											</p:column>
+											
+											<p:column headerText="Qtde" >
+												<h:outputText value="#{lista.total}" />						
+											</p:column>
+											
+											<p:column headerText="Percentual %" >
+												<h:outputText value="#{lista.percentual}" />
+											</p:column>
+											
+										</p:dataTable>
+									</p:tab>
+								</p:tabView>
+
+								</div>
+							</div>
+						</div>
+						
+						
+						<div class="col-md-6">
+							<div class="box box-default" id="gf6">
+							
+								<div class="box-header with-border">
+									<h3 class="box-title">Marca</h3>
+									<div class="box-tools pull-right">
+										<button type="button" class="btn btn-box-tool"
+											data-widget="collapse">
+											<i class="fa fa-minus"></i>
+										</button>
+										<button type="button" class="btn btn-box-tool" onclick="fullscreen6()">
+											<i class="fa fa-desktop"></i>
+										</button>
+									</div>
+								</div>
+			
+								<div class="box-body" >
+                   				 	
+                   				 <p:tabView dynamic="false" cache="false" id="tabview6">
+									<p:tab title="Gráfico" id="grafico6">										 
+                   						<img  src="#{beanRelatorio01.urlimg7}" width="100%" />								 			
+									</p:tab>
+									<p:tab title="Dados" id="dados6">
+										<p:dataTable id="tabela6" value="#{beanRelatorio01.lista_defeito_marca}" var="lista" scrollable="true" scrollHeight="300">
+											<p:column headerText="Marca" >
+												<h:outputText value="#{lista.nome}" />
+											</p:column>
+											
+											<p:column headerText="Qtde" >
+												<h:outputText value="#{lista.total}" />						
+											</p:column>
+											
+											<p:column headerText="Percentual %" >
+												<h:outputText value="#{lista.percentual}" />
+											</p:column>
+											
+										</p:dataTable>
+									</p:tab>
+								</p:tabView>
+
+								</div>
+							</div>
+						</div>
 				</div>	
 				
 				<p:separator></p:separator>
@@ -340,15 +475,23 @@ function fullscreen4(){
 									</p:tab>
 									<p:tab title="Dados" id="dados4">
 										<p:dataTable id="tabela3" value="#{beanRelatorio01.lista_defeito_produto}" var="lista" scrollable="true" scrollHeight="300">
-											<p:column headerText="Responsavel" >
+											<p:column headerText="ID Seven" width="5%">
+												<h:outputText value="#{lista.idseven}" />
+											</p:column>
+											
+											<p:column headerText="Referencia" width="20%">
 												<h:outputText value="#{lista.nome}" />
 											</p:column>
 											
-											<p:column headerText="Qtde" >
+											<p:column headerText="Descrição" >
+												<h:outputText value="#{lista.nome_produto}" />
+											</p:column>
+											
+											<p:column headerText="Qtde" width="5%">
 												<h:outputText value="#{lista.total}" />						
 											</p:column>
 											
-											<p:column headerText="Percentual %" >
+											<p:column headerText="Percentual %" width="10%">
 												<h:outputText value="#{lista.percentual}" />
 											</p:column>
 											

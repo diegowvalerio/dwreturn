@@ -17,13 +17,17 @@ import br.com.dw.entidades.Defeito;
 import br.com.dw.entidades.Responsavel;
 import br.com.dw.entidades.Tipo;
 import br.com.dw.relatorios.entidades.Defeito_componente;
+import br.com.dw.relatorios.entidades.Defeito_marca;
 import br.com.dw.relatorios.entidades.Defeito_produto;
 import br.com.dw.relatorios.entidades.Defeito_qtde;
 import br.com.dw.relatorios.entidades.Defeito_responsavel;
+import br.com.dw.relatorios.entidades.Defeito_tipo;
 import br.com.dw.relatorios.servico.ServicoDefeito_componente;
+import br.com.dw.relatorios.servico.ServicoDefeito_marca;
 import br.com.dw.relatorios.servico.ServicoDefeito_produto;
 import br.com.dw.relatorios.servico.ServicoDefeito_qtde;
 import br.com.dw.relatorios.servico.ServicoDefeito_responsavel;
+import br.com.dw.relatorios.servico.ServicoDefeito_tipo;
 import br.com.dw.servico.ServicoDefeito;
 import br.com.dw.servico.ServicoResponsavel;
 import br.com.dw.servico.ServicoTipo;
@@ -66,12 +70,19 @@ public class BeanRelatorio01 implements Serializable {
 	private ServicoDefeito_produto servico_defeito_produto;
 	private List<Defeito_produto> lista_defeito_produto = new ArrayList<Defeito_produto>();
 	
+	@Inject
+	private ServicoDefeito_tipo servico_defeito_tipo;
+	private List<Defeito_tipo> lista_defeito_tipo = new ArrayList<Defeito_tipo>();
+	
+	@Inject
+	private ServicoDefeito_marca servico_defeito_marca;
+	private List<Defeito_marca> lista_defeito_marca = new ArrayList<Defeito_marca>();
 	
 	private Date data_grafico = new Date();
 	private Date data_grafico2 = new Date();
 	private int f_defeito,f_responsavel,f_tipo = -1;
 	
-	private String urlimg, urlimg2, urlimg3,urlimg4,urlimg5;
+	private String urlimg, urlimg2, urlimg3,urlimg4,urlimg5, urlimg6, urlimg7;
 	
 	@PostConstruct
 	public void init() {
@@ -104,15 +115,128 @@ public class BeanRelatorio01 implements Serializable {
 		lista_defeito_componente = servico_defeito_componente.defeito_componente(f_defeito, data_grafico, data_grafico2, f_responsavel, f_tipo);
 		lista_defeito_responsavel = servico_defeito_responsavel.defeito_responsavel(f_defeito, data_grafico, data_grafico2, f_responsavel, f_tipo);
 		lista_defeito_produto = servico_defeito_produto.defeito_produto(f_defeito, data_grafico, data_grafico2, f_responsavel, f_tipo);
-	
+		lista_defeito_tipo = servico_defeito_tipo.defeito_tipo(f_defeito, data_grafico, data_grafico2, f_responsavel, f_tipo);
+		lista_defeito_marca = servico_defeito_marca.defeito_marca(f_defeito,data_grafico, data_grafico2, f_responsavel, f_tipo);
+		
 		gerarimg();
 		gerarimg2();
 		gerarimg3();
 		gerarimg4();
 		gerarimg5();
+		gerarimg6();
+		gerarimg7();
 				
 	}
 	
+	private void gerarimg7() {
+		urlimg7 = "";
+		if(lista_defeito_marca.size()>0) {
+			String[] defeito =  new String[lista_defeito_marca.size()];
+			BigDecimal[] qtde = new BigDecimal[lista_defeito_marca.size()];
+			
+			for (int i = 0; i < lista_defeito_marca.size(); i++) {
+				defeito[i]= lista_defeito_marca.get(i).getNome2();
+				qtde[i]= lista_defeito_marca.get(i).getPercentual();
+			}
+		
+		QuickChart chart = new QuickChart("http","177.72.156.109",8854);
+        chart.setWidth(1000);
+        chart.setHeight(500);
+        chart.setBackgroundColor("#ffffff");
+        chart.setVersion("2");
+        chart.setConfig("{ "
+        		+ "  type: 'horizontalBar', "
+        		+ "  data: { "
+        		+ "    labels: "+Arrays.toString(defeito)+", "
+        		+ "    datasets: [ "
+        		+ "      { "
+        		+ "        data: "+Arrays.toString(qtde)+", "
+        		+ "        backgroundColor: getGradientFillHelper('vertical', ['red', '#FF7256','#1E90FF','#00BFFF']), "
+        		+ "      }, "
+        		+ "    ], "
+        		+ "  }, "
+        		+ "  options: { "
+        		+ "    legend: { display: false }, "
+        		+ "    responsive: true, "
+        		+ "    plugins: { "
+        		+ "      datalabels: { "
+        		+ "		   font: { weight: 'bold', size: 12, },	"
+        		+ "        anchor: 'end', "
+        		+ "        align: 'center', "
+        		+ "        color: '#fff', "
+        		+ "        backgroundColor: 'rgb(34, 139, 34, 0.6)', "
+        		+ "        formatter: (value) => { "
+        		+ "          return value + '%'; "
+        		+ "        }, "
+        		+ "      }, "
+        		+ "    }, "
+        		+ "  }, "
+        		+ "}");
+
+       
+        //System.out.println(chart.getUrl());
+        
+        urlimg7 = chart.getUrl();
+		
+		}	
+		
+		
+	}
+
+	private void gerarimg6() {
+		urlimg6 = "";
+		if(lista_defeito_tipo.size()>0) {
+			String[] defeito =  new String[lista_defeito_tipo.size()];
+			BigDecimal[] qtde = new BigDecimal[lista_defeito_tipo.size()];
+			
+			for (int i = 0; i < lista_defeito_tipo.size(); i++) {
+				defeito[i]= lista_defeito_tipo.get(i).getNome2();
+				qtde[i]= lista_defeito_tipo.get(i).getPercentual();
+			}
+		
+		QuickChart chart = new QuickChart("http","177.72.156.109",8854);
+        chart.setWidth(1000);
+        chart.setHeight(500);
+        chart.setBackgroundColor("#ffffff");
+        chart.setVersion("2");
+        chart.setConfig("{ "
+        		+ "  type: 'horizontalBar', "
+        		+ "  data: { "
+        		+ "    labels: "+Arrays.toString(defeito)+", "
+        		+ "    datasets: [ "
+        		+ "      { "
+        		+ "        data: "+Arrays.toString(qtde)+", "
+        		+ "        backgroundColor: getGradientFillHelper('vertical', ['red', '#FF7256','#1E90FF','#00BFFF']), "
+        		+ "      }, "
+        		+ "    ], "
+        		+ "  }, "
+        		+ "  options: { "
+        		+ "    legend: { display: false }, "
+        		+ "    responsive: true, "
+        		+ "    plugins: { "
+        		+ "      datalabels: { "
+        		+ "		   font: { weight: 'bold', size: 12, },	"
+        		+ "        anchor: 'end', "
+        		+ "        align: 'center', "
+        		+ "        color: '#fff', "
+        		+ "        backgroundColor: 'rgb(34, 139, 34, 0.6)', "
+        		+ "        formatter: (value) => { "
+        		+ "          return value + '%'; "
+        		+ "        }, "
+        		+ "      }, "
+        		+ "    }, "
+        		+ "  }, "
+        		+ "}");
+
+       
+        //System.out.println(chart.getUrl());
+        
+        urlimg6 = chart.getUrl();
+		
+		}	
+		
+	}
+
 	private void gerarimg5() {
 		urlimg5 = "";
 		if(lista_defeito_produto.size()>0) {
@@ -519,6 +643,38 @@ public class BeanRelatorio01 implements Serializable {
 
 	public void setUrlimg(String urlimg) {
 		this.urlimg = urlimg;
+	}
+
+	public List<Defeito_tipo> getLista_defeito_tipo() {
+		return lista_defeito_tipo;
+	}
+
+	public void setLista_defeito_tipo(List<Defeito_tipo> lista_defeito_tipo) {
+		this.lista_defeito_tipo = lista_defeito_tipo;
+	}
+
+	public String getUrlimg6() {
+		return urlimg6;
+	}
+
+	public void setUrlimg6(String urlimg6) {
+		this.urlimg6 = urlimg6;
+	}
+
+	public List<Defeito_marca> getLista_defeito_marca() {
+		return lista_defeito_marca;
+	}
+
+	public void setLista_defeito_marca(List<Defeito_marca> lista_defeito_marca) {
+		this.lista_defeito_marca = lista_defeito_marca;
+	}
+
+	public String getUrlimg7() {
+		return urlimg7;
+	}
+
+	public void setUrlimg7(String urlimg7) {
+		this.urlimg7 = urlimg7;
 	}
 	
 	

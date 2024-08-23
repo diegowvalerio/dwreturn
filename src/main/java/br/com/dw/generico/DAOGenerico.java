@@ -4,9 +4,11 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.dw.relatorios.entidades.Defeito_componente;
+import br.com.dw.relatorios.entidades.Defeito_marca;
 import br.com.dw.relatorios.entidades.Defeito_produto;
 import br.com.dw.relatorios.entidades.Defeito_qtde;
 import br.com.dw.relatorios.entidades.Defeito_responsavel;
+import br.com.dw.relatorios.entidades.Defeito_tipo;
 
 
 public interface DAOGenerico<E> {
@@ -28,4 +30,6 @@ public interface DAOGenerico<E> {
 	public List<Defeito_componente> defeito_componente(int iddefeito,Date data1,Date data2,int responsavel, int tipo);
 	public List<Defeito_responsavel> defeito_responsavel(int iddefeito,Date data1,Date data2, int responsavel, int tipo);
 	public List<Defeito_produto> defeito_produto(int iddefeito,Date data1,Date data2, int responsavel, int tipo);
+	public List<Defeito_tipo> defeito_tipo(int iddefeito,Date data1,Date data2, int responsavel, int tipo);
+	public List<Defeito_marca> defeito_marca(int iddefeito,Date data1,Date data2, int responsavel, int marca);
 }

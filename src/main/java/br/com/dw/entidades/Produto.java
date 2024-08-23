@@ -25,6 +25,8 @@ public class Produto implements Serializable {
 	private Boolean situacao;
 	@Column(nullable=false,columnDefinition="varchar(20)")
 	private String codigoseven;		
+	
+	private Double vlcusto;
 
 	public Produto() {
 		super();
@@ -88,6 +90,16 @@ public class Produto implements Serializable {
 
 	public void setCodigoseven(String codigoseven) {
 		this.codigoseven = codigoseven;
+	}
+
+
+	public Double getVlcusto() {
+		return vlcusto;
+	}
+
+
+	public void setVlcusto(Double vlcusto) {
+		this.vlcusto = vlcusto;
 	}
 
 

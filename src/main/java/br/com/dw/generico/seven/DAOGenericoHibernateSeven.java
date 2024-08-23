@@ -96,7 +96,8 @@ public class DAOGenericoHibernateSeven<E> implements DAOGenericoSeven<E>, Serial
 				+ " cast(p.produtoid as integer) produtoid, "
 				+ " p.nome_produto , "
 				+ " p.referencia_produto , "
-				+ " p.status_produto  "
+				+ " p.status_produto,  "
+				+ " cast(p.vl_custo_produto as float) vlcusto "
 				+ " from produto p "
 				+ " where p.tp_produto = 'ACABADO' ";
 		
@@ -111,6 +112,7 @@ public class DAOGenericoHibernateSeven<E> implements DAOGenericoSeven<E>, Serial
 			f.setNome((String)row[1]);
 			f.setReferencia((String)row[2]);
 			f.setSituacao((String)row[3]);
+			f.setVlcusto((Double)row[4]);
 			
 			list.add(f);
 		}

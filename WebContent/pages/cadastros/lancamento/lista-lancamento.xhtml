@@ -47,7 +47,7 @@
 
 					<p:dataTable id="LancamentoTable" widgetVar="LancamentoTable" rows="10"
 						value="#{beanLancamento.lista}" var="lancamento"
-						rowKey="#{lancamento.id}" paginator="true"
+						rowKey="#{lancamento.id}" paginator="true" sortMode="single" sortOrder="descending" sortBy="#{lancamento.dtanalise}"
 						paginatorPosition="bottom" style="font-size: 12px;"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
 						currentPageReportTemplate="" rowsPerPageTemplate="5,10,15,20,30">

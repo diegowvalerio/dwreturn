@@ -158,6 +158,7 @@ public class BeanConfCadastro implements Serializable{
 					//altera
 					v.setNome(s.getNome());
 					v.setReferencia(s.getReferencia());
+					v.setVlcusto(s.getVlcusto());
 					if(s.getSituacao().equals("ATIVO")) {
 						v.setSituacao(true);
 					}else {
@@ -169,6 +170,7 @@ public class BeanConfCadastro implements Serializable{
 					v.setCodigoseven(s.getId().toString());
 					v.setNome(s.getNome());
 					v.setReferencia(s.getReferencia());
+					v.setVlcusto(s.getVlcusto());
 					if(s.getSituacao().equals("ATIVO")) {
 						v.setSituacao(true);
 					}else {
